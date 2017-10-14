@@ -1,3 +1,5 @@
+import java.awt.AWTException;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
@@ -16,11 +18,13 @@ import commons.DoAccount;
 
 public class NewTest {
   @Test()
-  public void f() throws InterruptedException {
+  public void f() throws InterruptedException, AWTException {
 	  DoAccount d=new DoAccount();
 	  d.toLoginPage( "admin", "123456");
 	  d.toAcctMgmtMenu();
 	  d.toBasicAcctPage();
+	  d.submitBasicAcct();
+	  d.checkAndSynch();
   }
   @BeforeMethod
   public void beforeMethod() {
