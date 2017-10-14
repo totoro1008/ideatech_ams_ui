@@ -15,16 +15,17 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.AfterSuite;
 import commons.Initializer;
 import commons.DoAccount;
+import commons.Releaser;
 
 public class NewTest {
   @Test()
   public void f() throws InterruptedException, AWTException {
-	  DoAccount d=new DoAccount();
-	  d.toLoginPage( "admin", "123456");
+	  DoAccount d=new DoAccount("admin","123456");
 	  d.toAcctMgmtMenu();
 	  d.toBasicAcctPage();
 	  d.submitBasicAcct();
 	  d.checkAndSynch();
+	  new Releaser();
   }
   @BeforeMethod
   public void beforeMethod() {

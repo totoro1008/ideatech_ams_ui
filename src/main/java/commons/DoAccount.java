@@ -1,50 +1,33 @@
 package commons;
 
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.codec.language.bm.Lang;
 import org.openqa.selenium.By;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.*;
 
 import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat; 
 
 public class DoAccount {
 
 	public Initializer initializer;
+	private String usrname;
+	private String pwd;
 	
-	public DoAccount() {
-		this.initializer=new Initializer();
+	public DoAccount(String usrname,String pwd) {
+		this.initializer=new Initializer(usrname,pwd);
 	}
-	// 打开AMS登录页
-    public void toLoginPage(String usrname,String pwd) {
-    	   initializer.launchChrome();
-    	   initializer.login(usrname, pwd);
-    	}
-    
+
     // 打开对公报备管理页
-    @SuppressWarnings("static-access")
 	public void toAcctMgmtMenu() {
     	   initializer.driver.findElement(By.cssSelector("img[src='../css/icons/icon-3.png']")).click();
-    	   //initializer.driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-    	   //initializer.driver.findElement(By.cssSelector("a[_href='company/gridQueryAccounts.html?code=zhsqNoCheck']")).click();
     	   WebElement menu1=initializer.driver.findElement(By.cssSelector("img[src='../css/icons/icon-3.png']"));
     	   WebElement menu1_1=initializer.driver.findElement(By.cssSelector("a[_href='company/gridQueryAccounts.html?code=zhsqNoCheck']"));
     	   new Actions(initializer.driver).click(menu1).moveToElement(menu1_1).click().perform();  
     }
-    	   
-    	    
+    	      	    
     // 打开基本户开户页
     public void toBasicAcctPage() {
        initializer.driver.switchTo().frame(1);
@@ -52,11 +35,9 @@ public class DoAccount {
  	   WebElement menu1_1 = initializer.driver.findElement(By.cssSelector("html body.dhxwins_vp_dhx_terrace.dhxlayout_base_dhx_terrace div.dhx_toolbar_poly_dhx_terrace.dhxtoolbar_icons_18 table.buttons_cont tbody tr.tr_btn td.td_btn_txt div.btn_sel_text"));
     	   new Actions(initializer.driver).click(menu1).moveToElement(menu1_1).click().perform();
     	   }
-    
-    
+       
     // 填写并提交基本户开户表单
-    @SuppressWarnings("deprecation")
-	public void submitBasicAcct() throws AWTException, InterruptedException {
+    public void submitBasicAcct() throws AWTException, InterruptedException {
     	   initializer.driver.switchTo().defaultContent();
     	   initializer.driver.switchTo().frame(2);
     	   //账户信息
@@ -113,19 +94,32 @@ public class DoAccount {
     	   //robot.keyPress(KeyEvent.VK_ENTER);
     	   //robot.keyRelease(KeyEvent.VK_ENTER);
     	   //initializer.driver.switchTo().defaultContent();
-    	   Thread.sleep(1000);
+    	   Thread.sleep(500);
     	   initializer.driver.switchTo().alert().accept();
     	   //关闭开户页
     	   //initializer.driver.findElementByCssSelector("span[data-href='company/form.html?type=yiban|ACCT_OPEN'] + li").click();
     	   //initializer.driver.findElementByCssSelector("#min_title_list > li.active > i").click();
     }
        //新开户审核并上报
-    public void checkAndSynch()
+    public void checkAndSynch() throws InterruptedException
     {
     	   initializer.driver.switchTo().defaultContent();
+    	   initializer.driver.findElementByXPath("/html/body/section/div[1]/div[1]/ul/li[2]/span").click();
     	   initializer.driver.switchTo().frame(1);
     	   initializer.driver.findElementByXPath("/html/body/div[1]/div[2]/div[3]/table/tbody/tr[1]/td/div[3]/i").click();
-    	   
+    	   initializer.driver.switchTo().defaultContent();
+    	   initializer.driver.switchTo().frame(3);
+    	   new Actions(initializer.driver).doubleClick(initializer.driver.findElementByXPath("/html/body/div[1]/div[2]/div[3]/table/tbody/tr[1]/td/div/div[2]/table/tbody/tr[2]")).perform();
+    	   initializer.driver.switchTo().defaultContent();
+    	   initializer.driver.switchTo().frame(4);
+    	   //勾选上报人行账管系统、机构信用代码系统
+    	   initializer.driver.findElementByXPath("/html/body/div[1]/div[2]/div[2]//div[5]//div[10]//fieldset//div[1]//div[1]/div[2]/div").click();
+    	   initializer.driver.findElementByXPath("/html/body/div[1]/div[2]/div[2]//div[5]//div[10]//fieldset//div[2]//div[1]/div[2]/div").click();
+    	   //审核并上报
+    	   initializer.driver.findElementByCssSelector("div.dhx_cell_cont_layout:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)").click();
+    	   //点击确认弹框
+    	   Thread.sleep(500);
+    	   initializer.driver.switchTo().alert().accept();
     }
        
 }
