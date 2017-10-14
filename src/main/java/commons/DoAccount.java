@@ -13,12 +13,6 @@ import java.text.SimpleDateFormat;
 public class DoAccount {
 
 	public Initializer initializer;
-	private String usrname;
-	private String pwd;
-	
-	public DoAccount(String usrname,String pwd) {
-		this.initializer=new Initializer(usrname,pwd);
-	}
 
     // 打开对公报备管理页
 	public void toAcctMgmtMenu() {

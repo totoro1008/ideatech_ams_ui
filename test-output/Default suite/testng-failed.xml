@@ -6,7 +6,7 @@
       <class name="NewTest">
         <methods>
           <include name="afterMethod"/>
-          <include name="f"/>
+          <include name="openBasicAcct"/>
           <include name="beforeMethod"/>
           <include name="beforeClass"/>
           <include name="beforeTest"/>

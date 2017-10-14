@@ -20,7 +20,7 @@ public class Initializer
 		dc.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE);
 		this.driver=new ChromeDriver(dc);
 		
-		//启动chrome驱动
+		//启动Chrome驱动
 		driver.get("http://118.178.93.238:48080/ams/login/login.html");
 		driver.manage().deleteAllCookies();
 		driver.manage().window().maximize();

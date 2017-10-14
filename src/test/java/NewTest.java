@@ -19,8 +19,9 @@ import commons.Releaser;
 
 public class NewTest {
   @Test()
-  public void f() throws InterruptedException, AWTException {
-	  DoAccount d=new DoAccount("admin","123456");
+  public void openBasicAcct() throws InterruptedException, AWTException {
+	  new Initializer("admin","123456");
+	  DoAccount d=new DoAccount();
 	  d.toAcctMgmtMenu();
 	  d.toBasicAcctPage();
 	  d.submitBasicAcct();
