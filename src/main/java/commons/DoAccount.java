@@ -1,6 +1,7 @@
 package commons;
 
 
+import java.util.Calendar;
 import java.util.Date;
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
@@ -52,6 +53,11 @@ public class DoAccount {
     	   initializer.driver.findElementByName("regNo").sendKeys("12345678");
     	   new Select(initializer.driver.findElementByName("fileType")).selectByIndex(1);
     	   initializer.driver.findElementByName("fileNo").sendKeys("12345678");
+    	   //设置证件到期日
+    	   Calendar c = Calendar.getInstance();
+    	   c.add(Calendar.DAY_OF_MONTH, 1);
+    	   initializer.driver.findElementByName("tovoidDate").sendKeys(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+    	   
     	   new Select(initializer.driver.findElementByName("isIdentification")).selectByIndex(1);
     	   initializer.driver.findElementByName("businessScope").sendKeys("businessScope");
     	   initializer.driver.findElementByName("businessScopeEccs").sendKeys("UI_AUTOMATION");
@@ -78,7 +84,7 @@ public class DoAccount {
     	   new Select(initializer.driver.findElementByName("corpScale")).selectByIndex(1);
     	   //上级机构信息
     	   initializer.driver.findElementByName("parLegalIdcardDate").sendKeys(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-    	   initializer.driver.findElementByName("orgEccsToVoidDate").sendKeys(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+    	   //initializer.driver.findElementByName("orgEccsToVoidDate").sendKeys(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
     	   //授权经办人信息
     	   initializer.driver.findElementByName("agentTypeNoVoidDate").sendKeys(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
     	   //提交
@@ -112,7 +118,7 @@ public class DoAccount {
     	   //审核并上报
     	   initializer.driver.findElementByCssSelector("div.dhx_cell_cont_layout:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)").click();
     	   //点击确认弹框
-    	   Thread.sleep(500);
+    	   Thread.sleep(1000);
     	   initializer.driver.switchTo().alert().accept();
     }
        
