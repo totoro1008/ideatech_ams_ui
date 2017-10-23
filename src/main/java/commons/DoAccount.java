@@ -10,11 +10,13 @@ import org.openqa.selenium.*;
 
 import java.awt.AWTException;
 import java.text.SimpleDateFormat; 
-
+import utilities.*
+;
 public class DoAccount {
 
 	public Initializer initializer;
-
+    private String acctNo = "";
+    
     // 打开对公报备管理页
 	public void toAcctMgmtMenu() {
     	   initializer.driver.findElement(By.cssSelector("img[src='../css/icons/icon-3.png']")).click();
@@ -24,11 +26,12 @@ public class DoAccount {
     }
     	      	    
     // 打开基本户开户页
-    public void toBasicAcctPage() {
+    public void toBasicAcctPage() throws Exception {
        initializer.driver.switchTo().frame(1);
     	   WebElement menu1 = initializer.driver.findElementByXPath("/html/body/div[1]/div[2]/div[2]/div/div/div[1]/img");
  	   WebElement menu1_1 = initializer.driver.findElement(By.cssSelector("html body.dhxwins_vp_dhx_terrace.dhxlayout_base_dhx_terrace div.dhx_toolbar_poly_dhx_terrace.dhxtoolbar_icons_18 table.buttons_cont tbody tr.tr_btn td.td_btn_txt div.btn_sel_text"));
     	   new Actions(initializer.driver).click(menu1).moveToElement(menu1_1).click().perform();
+    	   SaveScreenshot.saveSnapshot(Thread.currentThread().getStackTrace()[1].getMethodName());
     	   }
        
     // 填写并提交基本户开户表单
@@ -37,6 +40,7 @@ public class DoAccount {
     	   initializer.driver.switchTo().frame(2);
     	   //账户信息
     	   initializer.driver.findElementByName("acctNo").sendKeys(Long.toString(System.currentTimeMillis()));
+    	   this.acctNo = initializer.driver.findElementByName("acctNo").getText();
     	   initializer.driver.findElementByName("bankCode").sendKeys("12345678");
     	   //工商注册信息
     	   initializer.driver.findElementByName("depositorName").sendKeys("J12345678901234");
@@ -96,6 +100,7 @@ public class DoAccount {
     	   //initializer.driver.switchTo().defaultContent();
     	   Thread.sleep(500);
     	   initializer.driver.switchTo().alert().accept();
+    	   //System.out.println(acctNo);
     	   //关闭开户页
     	   //initializer.driver.findElementByCssSelector("span[data-href='company/form.html?type=yiban|ACCT_OPEN'] + li").click();
     	   //initializer.driver.findElementByCssSelector("#min_title_list > li.active > i").click();
@@ -103,13 +108,15 @@ public class DoAccount {
        //新开户审核并上报
     public void checkAndSynch() throws InterruptedException
     {
+    	   //System.out.println(acctNo);
+    	   //String acctNo ="1508723320058";
     	   initializer.driver.switchTo().defaultContent();
     	   initializer.driver.findElementByXPath("/html/body/section/div[1]/div[1]/ul/li[2]/span").click();
     	   initializer.driver.switchTo().frame(1);
     	   initializer.driver.findElementByXPath("/html/body/div[1]/div[2]/div[3]/table/tbody/tr[1]/td/div[3]/i").click();
     	   initializer.driver.switchTo().defaultContent();
     	   initializer.driver.switchTo().frame(3);
-    	   new Actions(initializer.driver).doubleClick(initializer.driver.findElementByXPath("/html/body/div[1]/div[2]/div[3]/table/tbody/tr[1]/td/div/div[2]/table/tbody/tr[2]")).perform();
+    	   new Actions(initializer.driver).doubleClick(initializer.driver.findElementByXPath("/html/body/div[1]/div[2]/div[3]/table/tbody//td[@title='"+this.acctNo+"']")).perform();
     	   initializer.driver.switchTo().defaultContent();
     	   initializer.driver.switchTo().frame(4);
     	   //勾选上报人行账管系统、机构信用代码系统

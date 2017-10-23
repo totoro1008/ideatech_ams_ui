@@ -17,9 +17,10 @@ import commons.Initializer;
 import commons.DoAccount;
 import commons.Releaser;
 
+
 public class NewTest {
   @Test()
-  public void openBasicAcct() throws InterruptedException, AWTException {
+  public void openBasicAcct() throws Exception {
 	  new Initializer("admin","123456");
 	  DoAccount d=new DoAccount();
 	  d.toAcctMgmtMenu();
